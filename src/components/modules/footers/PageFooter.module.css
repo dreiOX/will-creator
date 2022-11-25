@@ -1,0 +1,32 @@
+.container {
+  background-color: black;
+  height: 30vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: orange;
+  padding: 10px 150px;
+}
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #5d3a6f;
+  text-decoration: none;
+}
+.span {
+  color: orange;
+}
+.sm {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 512px) {
+  .container {
+    flex-direction: column;
+    height: 100%;
+    gap: 20px;
+    padding: 40px 15px;
+  }
+}
