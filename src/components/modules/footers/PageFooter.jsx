@@ -44,13 +44,13 @@ function PageFooter() {
         </div>
       </div>
       <div>
-        <h>FORMAT</h>
+        <h3>FORMAT</h3>
         <p>Will Builder</p>
         <p> Will Examples</p>
         <p> Will Templates</p>
       </div>
       <div>
-        <h>ABOUT US</h>
+        <h3>ABOUT US</h3>
         <p>Contact us</p>
         <p>FAQs</p>
         <p>Terms of use</p>
