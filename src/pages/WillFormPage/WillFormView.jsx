@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState , useRef} from "react";
 import style from "./willform.module.css";
 
 function WillFormView() {
@@ -14,28 +14,79 @@ function WillFormView() {
     willConditional:
       "Should any beneficiary not survive me by _ days, their share shall be distributed to _.",
   });
+  const exRef = useRef()
   const [checked, setChecked] = useState(false);
+  /* array for property distribution */
+  const [dOPArray, setDOPArray] = useState([]);
 
+  /* state for when property availability is exceeded */
+ 
+  /* disabled states for buttons */
   const disabledSub =
     checked &&
     formState.representativeName &&
     formState.willWritersAddress &&
     formState.willWritersName &&
+    dOPArray.length &&
     formState.willConditional;
-  const disabledAdd = !!formState.propertyName && !!formState.beneficiary;
-
+  const disabledAdd = formState.propertyName && formState.beneficiary;
 
   /* fetching ip address to use as online signature */
-  text("https://www.cloudflare.com/cdn-cgi/trace").then((data) => {
-    let ipRegex = /[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/;
-    let ip = data.match(ipRegex)[0];
-    setIp(ip);
-  });
+  useEffect(() => {
+    text("https://www.cloudflare.com/cdn-cgi/trace").then((data) => {
+      let ipRegex = /[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/;
+      let ip = data.match(ipRegex)[0];
+      setIp(ip);
+    });
+  }, []);
 
   const handleSubmit = () => {
     return (e) => {
       e.preventDefault();
     };
+  };
+
+  const handleAdd = (e) => {
+    e.preventDefault();
+    if (!disabledAdd) {
+      return;
+    }
+    let h = dOPArray.filter((item)=>item.propertyName===formState.propertyName)
+    if(h.length){
+      let c = formState.propertyPercentage
+      let cNum = Number(c.slice(0, c.length-1))
+      let exceeded = false
+      h.map((v)=>{
+        let p = v.propertyPercentage
+        let pNum = Number(p.slice(0, p.length-1))
+        
+        if(cNum+pNum>100){
+          
+          exRef.current.innerText= 'you have exceeded the 100% mark. You only have '+(100-pNum)+'% of this property left'
+          
+        }
+        cNum += pNum 
+        return ''
+      })
+      if(exceeded){
+        return
+      }
+    }
+    setDOPArray((prev) => [
+      ...prev,
+      {
+        beneficiary: formState.beneficiary,
+        propertyName: formState.propertyName,
+        propertyPercentage: formState.propertyPercentage,
+      },
+    ]);
+
+    setFormstate((prev) => ({
+      ...prev,
+      beneficiary: "",
+      propertyName: "",
+      propertyPercentage: "100%",
+    }));
   };
 
   const handleChange = ({ target }) => {
@@ -62,7 +113,9 @@ function WillFormView() {
               id="checkbox"
               required
             />
-            <span></span>
+            <span
+            aria-label="checkbox"
+            ></span>
           </label>
           <label>
             Name *
@@ -116,6 +169,18 @@ function WillFormView() {
         </section>
         <section>
           <h3>Distribution of properties</h3>
+          <ul className={style.dOPContainer}>
+            {dOPArray.map((item, index) => {
+              return (
+                <li key={index}>
+                  {item.propertyName} ({item.propertyPercentage}) :{" "}
+                  {item.beneficiary}
+                </li>
+              );
+            })}
+          </ul>
+          <span ref={exRef}>
+          </span>
           <label>
             Property Name *
             <input
@@ -128,7 +193,7 @@ function WillFormView() {
             />
           </label>
           <label>
-            Percentage:{" "}
+            Percentage:
             <select
               name="propertyPercentage"
               value={formState?.propertyPercentage}
@@ -162,7 +227,7 @@ function WillFormView() {
             style={{
               opacity: `${!disabledAdd ? "0.4" : "1"}`,
             }}
-            disabled={!disabledAdd}
+            onClick={(e) => handleAdd(e)}
           >
             add beneficiary
           </button>
@@ -183,7 +248,6 @@ function WillFormView() {
 
         <button
           type="submit"
-          disabled={!disabledSub}
           style={{
             opacity: `${!disabledSub ? "0.4" : "1"}`,
           }}
