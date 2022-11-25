@@ -1,7 +1,8 @@
 import styles from "./willDisplay.module.css";
-
+import { WILLFORM } from "../../navigation/CONSTANTS";
 import { AppContext } from "../../App";
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 
 export default function WillDisplay() {
   const { willData } = useContext(AppContext);
@@ -10,10 +11,12 @@ export default function WillDisplay() {
   
 
   return (
+    
     <section className={styles.container}>
+    {willData.willWritersName!==undefined?
       <section className={styles.will}>
-        <h2>LAST WILL AND TESTEMENT OF</h2>
-        <article>
+      <h2>LAST WILL AND TESTEMENT OF</h2>
+      <article>
           <h3>{willData.willWritersName}</h3>
           <p>
             I, {willData.willWritersName}, an adult residing at{" "}
@@ -35,8 +38,8 @@ export default function WillDisplay() {
           </p>
         </article>
         <article>
-          <h3>ARTICLE II</h3>
-          <p>
+        <h3>ARTICLE II</h3>
+        <p>
             I direct my Personal Representative to pay out of my residuary
             estate all of the expenses of my last illness, administration
             expenses, all legally enforceable creditor claims, all Federal
@@ -65,8 +68,8 @@ export default function WillDisplay() {
         <article>
           <h3>SELF-PROVING AFFIDAVIT</h3>
           <p>
-            The instrument, consisting of this and two (2) typewritten pages was
-            signed and acknowledged by Testator as his Last Will and Testament
+          The instrument, consisting of this and two (2) typewritten pages was
+          signed and acknowledged by Testator as his Last Will and Testament
             in our presence, and we, at his request, and in his presence, and in
             the presence of each other, have subscribed our names as witnesses.
             Under penalties for perjury, we, the undersigned Testator and
@@ -88,7 +91,9 @@ export default function WillDisplay() {
           signature: <span>WillCreator</span>
           <p>WillCreator, Witness</p>
         </section>
-      </section>
+      </section>:
+      <p>No data provided. Go to will <Link to={WILLFORM}>form</Link></p>
+      }
     </section>
   );
 }
