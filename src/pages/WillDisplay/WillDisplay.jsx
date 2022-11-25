@@ -80,7 +80,7 @@ export default function WillDisplay() {
             sound mind; and 6. That, to the best of his knowledge, the Testator
             was at the time eighteen (18) or more years of age.
           </p>
-          <p>All of which is attested to this on {date.getDate+'/'+date.getMonth()+'/'+date.getYear}</p>
+          <p>All of which is attested to this on {date.getDate()+'/'+date.getMonth()+'/'+date.getYear()}</p>
         </article>
         <section>
           signature: {willData.ip}
