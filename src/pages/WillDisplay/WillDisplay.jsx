@@ -29,7 +29,7 @@ export default function WillDisplay() {
             Representative to administer this Will, and ask that he be permitted
             to serve without Court supervision and without posting bond. If{" "}
             {willData.representativeName} is unwilling or unable to serve, then
-            I appoint {willData.repSubsitute} to serve as my Personal
+            I appoint {willData.repSubstitute} to serve as my Personal
             Representative, and ask that he be permitted to serve without Court
             supervision and without posting bond.
           </p>
