@@ -1,5 +1,5 @@
 import React from 'react';
-import { facebook, instagram, twitter } from '../../../assets/icons';
+
 import styles from './PageFooter.module.css';
 
 function PageFooter() {
