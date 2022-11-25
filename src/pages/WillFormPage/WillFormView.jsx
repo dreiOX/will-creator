@@ -1,11 +1,14 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { WILLDISPLAY } from "../../navigation/CONSTANTS";
 import style from "./willform.module.css";
 
+import { AppContext } from "../../App";
+
 function WillFormView() {
   const navigate = useNavigate()
   const [ip, setIp] = useState("");
+  const {setWillData} = useContext(AppContext)
   const [formState, setFormstate] = useState({
     willWritersName: "",
     willWritersAddress: "",
@@ -15,7 +18,7 @@ function WillFormView() {
     propertyPercentage: "100%",
     beneficiary: "",
     willConditional:
-      "Should any beneficiary not survive me by _ days, their share shall be distributed to _.",
+      "Should any beneficiary not survive me by 10 days, their share shall be distributed to charity organizations of representatives choice.",
   });
   const exRef = useRef();
   const [checked, setChecked] = useState(false);
@@ -48,9 +51,10 @@ function WillFormView() {
       e.preventDefault();
       const data = {
         ...formState,
+        dOPArray,
         ip
       }
-
+      setWillData(data)
       setFormstate((prev) => ({
         ...prev,
         willWritersName: "",

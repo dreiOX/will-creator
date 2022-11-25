@@ -1,27 +1,37 @@
 import styles from "./willDisplay.module.css";
 
+import { AppContext } from "../../App";
+import { useContext } from "react";
+
 export default function WillDisplay() {
+  const { willData } = useContext(AppContext);
+  console.log(willData)
+  const date = new Date()
+  
+
   return (
     <section className={styles.container}>
       <section className={styles.will}>
         <h2>LAST WILL AND TESTEMENT OF</h2>
         <article>
-          <h3>John Smith</h3>
+          <h3>{willData.willWritersName}</h3>
           <p>
-            I, John Smith, an adult residing at 5 Cherry Lane, New York, New
-            York, being of sound mind, declare this to be my Last Will and
-            Testament. I revoke all wills and codicils previously made by me.{" "}
+            I, {willData.willWritersName}, an adult residing at{" "}
+            {willData.willWritersAddress}, being of sound mind, declare this to
+            be my Last Will and Testament. I revoke all wills and codicils
+            previously made by me.{" "}
           </p>
         </article>
         <article>
           <h3>ARTICLE I</h3>
           <p>
-            I appoint Barry Feinstein as my Personal Representative to
-            administer this Will, and ask that he be permitted to serve without
-            Court supervision and without posting bond. If Barry Feinstein is
-            unwilling or unable to serve, then I appoint Charles Reid to serve
-            as my Personal Representative, and ask that he be permitted to serve
-            without Court supervision and without posting bond.
+            I appoint {willData.representativeName} as my Personal
+            Representative to administer this Will, and ask that he be permitted
+            to serve without Court supervision and without posting bond. If{" "}
+            {willData.representativeName} is unwilling or unable to serve, then
+            I appoint {willData.repSubsitute} to serve as my Personal
+            Representative, and ask that he be permitted to serve without Court
+            supervision and without posting bond.
           </p>
         </article>
         <article>
@@ -40,29 +50,17 @@ export default function WillDisplay() {
         </article>
         <article>
           <h3>ARTICLE III</h3>
-          <p>
-            I devise, bequeath, and give my baseball card collection to my son,
-            James Smith. I devise, bequeath, and give my books and bookshelves
-            to my sister, Samantha Jones. I devise, bequeath, and give my
-            jewelry to my wife, Nancy Smith.
-          </p>
+          {willData.dOPArray.map((item) => (
+            <p>
+              I devise, bequeth, and give {item.propertyPercentage} of{" "}
+              {item.propertyName} to {item.beneficiary}
+            </p>
+          ))}
         </article>
+
         <article>
           <h3>ARTICLE IV</h3>
-          <p>
-            I devise, bequeath, and give my baseball card collection to my son,
-            James Smith. I devise, bequeath, and give my books and bookshelves
-            to my sister, Samantha Jones. I devise, bequeath, and give my
-            jewelry to my wife, Nancy Smith.
-          </p>
-        </article>
-        <article>
-          <h3>ARTICLE V</h3>
-          <p>
-            Should any beneficiary not survive me by 30 days, his or her share
-            shall be distributed to his or her then surviving children in equal
-            shares.
-          </p>
+          <p>{willData.willConditional}</p>
         </article>
         <article>
           <h3>SELF-PROVING AFFIDAVIT</h3>
@@ -82,13 +80,13 @@ export default function WillDisplay() {
             sound mind; and 6. That, to the best of his knowledge, the Testator
             was at the time eighteen (18) or more years of age.
           </p>
-          <p>All of which is attested to this 20th day of February 2013</p>
+          <p>All of which is attested to this on {date.getDate+'/'+date.getMonth()+'/'+date.getYear}</p>
         </article>
         <section>
-          (Signature)
-          <p>JOHN SMITH, Testator</p>
-          (Signature)
-          <p>Witness</p>
+          signature: {willData.ip}
+          <p>{willData.willWritersName.toUpperCase()}, Testator</p>
+          signature: <span>WillCreator</span>
+          <p>WillCreator, Witness</p>
         </section>
       </section>
     </section>
