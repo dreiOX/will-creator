@@ -1,11 +1,11 @@
 import React from "react";
 import { PageWrapper } from "../../components/modules/wrapper";
-import Results from "./Results";
+import WillDisplay from "./WillDisplay";
 
-export const ResultsContainer = () => {
+export const WillDisplayContainer = () => {
   return (
     <PageWrapper>
-      <Results />
+      <WillDisplay />
     </PageWrapper>
   );
 };

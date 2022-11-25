@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Home, WillForm } from '../pages';
-import Results from '../pages/Results';
+import WillDisplay from '../pages/WillDisplay';
 import { HOME, WILLFORM, WILLDISPLAY } from './CONSTANTS';
 
 function RouterConfig() {
@@ -11,7 +11,7 @@ function RouterConfig() {
         {/* List all public routes here */}
         <Route exact path={HOME} element={<Home />} />
         <Route exact path={WILLFORM} element={<WillForm />} />
-        <Route exact path={WILLDISPLAY} element={<Results/>}/>
+        <Route exact path={WILLDISPLAY} element={<WillDisplay/>}/>
       </Routes>
     </div>
   );

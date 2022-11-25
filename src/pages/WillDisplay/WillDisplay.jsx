@@ -1,6 +1,6 @@
-import styles from "./results.module.css";
+import styles from "./willDisplay.module.css";
 
-export default function Results() {
+export default function WillDisplay() {
   return (
     <section className={styles.container}>
       <section className={styles.will}>
