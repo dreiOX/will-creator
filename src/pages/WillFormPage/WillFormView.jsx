@@ -1,7 +1,10 @@
-import React, { useEffect, useState , useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { WILLDISPLAY } from "../../navigation/CONSTANTS";
 import style from "./willform.module.css";
 
 function WillFormView() {
+  const navigate = useNavigate()
   const [ip, setIp] = useState("");
   const [formState, setFormstate] = useState({
     willWritersName: "",
@@ -14,13 +17,13 @@ function WillFormView() {
     willConditional:
       "Should any beneficiary not survive me by _ days, their share shall be distributed to _.",
   });
-  const exRef = useRef()
+  const exRef = useRef();
   const [checked, setChecked] = useState(false);
   /* array for property distribution */
   const [dOPArray, setDOPArray] = useState([]);
 
   /* state for when property availability is exceeded */
- 
+
   /* disabled states for buttons */
   const disabledSub =
     checked &&
@@ -43,6 +46,24 @@ function WillFormView() {
   const handleSubmit = () => {
     return (e) => {
       e.preventDefault();
+      const data = {
+        ...formState,
+        ip
+      }
+
+      setFormstate((prev) => ({
+        ...prev,
+        willWritersName: "",
+        willWritersAddress: "",
+        representativeName: "",
+        repSubstitute: "",
+        propertyName: "",
+        propertyPercentage: "100%",
+        beneficiary: "",
+        willConditional:
+          "Should any beneficiary not survive me by _ days, their share shall be distributed to _.",
+      }));
+      navigate(WILLDISPLAY)
     };
   };
 
@@ -51,25 +72,32 @@ function WillFormView() {
     if (!disabledAdd) {
       return;
     }
-    let h = dOPArray.filter((item)=>item.propertyName===formState.propertyName)
-    if(h.length){
-      let c = formState.propertyPercentage
-      let cNum = Number(c.slice(0, c.length-1))
-      let exceeded = false
-      h.map((v)=>{
-        let p = v.propertyPercentage
-        let pNum = Number(p.slice(0, p.length-1))
-        
-        if(cNum+pNum>100){
-          
-          exRef.current.innerText= 'you have exceeded the 100% mark. You only have '+(100-pNum)+'% of this property left'
-          
+    let h = dOPArray.filter(
+      (item) => item.propertyName === formState.propertyName
+    );
+    if (h.length) {
+      let c = formState.propertyPercentage;
+      let cNum = Number(c.slice(0, c.length - 1));
+      let exceeded = false;
+      h.map((v) => {
+        let p = v.propertyPercentage;
+        let pNum = Number(p.slice(0, p.length - 1));
+
+        if (cNum + pNum > 100) {
+          exRef.current.innerText =
+            "you have exceeded the 100% mark. You only have " +
+            (100 - pNum) +
+            "% of this property left";
+          exceeded = true;
+          setTimeout(() => {
+            exRef.current.innerText = "";
+          }, 2000);
         }
-        cNum += pNum 
-        return ''
-      })
-      if(exceeded){
-        return
+        cNum += pNum;
+        return "";
+      });
+      if (exceeded) {
+        return;
       }
     }
     setDOPArray((prev) => [
@@ -99,7 +127,8 @@ function WillFormView() {
   return (
     <div className={style.container}>
       <h2>Last Will and Testament Form</h2>
-      <form onSubmit={handleSubmit} className={style.form}>
+      <form onSubmit={(e)=>e.preventDefault()} 
+      className={style.form} >
         <section>
           <h3>Personal Information</h3>
           <label className={style.checkboxLabel}>
@@ -113,9 +142,7 @@ function WillFormView() {
               id="checkbox"
               required
             />
-            <span
-            aria-label="checkbox"
-            ></span>
+            <span aria-label="checkbox"></span>
           </label>
           <label>
             Name *
@@ -179,14 +206,13 @@ function WillFormView() {
               );
             })}
           </ul>
-          <span ref={exRef}>
-          </span>
+          <span ref={exRef}></span>
           <label>
             Property Name *
             <input
               type="text"
               name="propertyName"
-              required
+       
               value={formState?.propertyName}
               onChange={handleChange}
               placeholder="enter property name"
@@ -219,7 +245,7 @@ function WillFormView() {
               placeholder="enter name of recipient beneficiary"
               value={formState?.beneficiary}
               onChange={handleChange}
-              required
+              
             />
           </label>
           <button
@@ -251,6 +277,7 @@ function WillFormView() {
           style={{
             opacity: `${!disabledSub ? "0.4" : "1"}`,
           }}
+          onClick={handleSubmit()}
         >
           submit
         </button>
