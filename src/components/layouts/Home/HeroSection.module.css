@@ -1,0 +1,146 @@
+.container {
+  background-color: #5d3a6f;
+  color: #fff;
+  height: 80vh;
+  display: grid;
+  display: flex;
+  gap: 40px;
+  padding: 40px 150px;
+}
+.textcontainer {
+  width: 50%;
+}
+.header {
+  font-size: 70px;
+  padding-bottom: 40px;
+}
+.span {
+  color: orange;
+}
+.anchor {
+  display: flex;
+  align-items: flex-start;
+}
+.button {
+  background-color: #fff;
+  padding: 16px 32px;
+  border-radius: 10px;
+  border: 1px solid #fff;
+  cursor: pointer;
+  font-size: 20px;
+  color: #5d3a6f;
+  text-decoration: none;
+}
+.button:hover {
+  background-color: #aa98b5;
+  border: 1px solid #aa98b5;
+  color: orange;
+}
+.boxcontainer {
+  padding: 40px 90px;
+  width: 50%;
+}
+.boxcontainer img {
+  position: absolute;
+  top: 165px;
+  right: 300px;
+  height: 450px;
+  width: 400px;
+}
+.box {
+  border: 10px solid #aa98b5;
+  height: 100%;
+  width: 100%;
+  transform: rotate(5deg);
+}
+.boximg {
+  height: 580px;
+  width: 400px;
+}
+
+.howcontainer {
+  background-color: #fff;
+  /* height: 80vh; */
+  display: flex;
+  flex-direction: column;
+  padding: 40px 220px;
+}
+.head {
+  color: #5d3a6f;
+  font-size: 60px;
+  text-align: center;
+}
+.texthead {
+  color: #5d3a6f;
+  font-size: 40px;
+}
+.textparagraph {
+  font-size: 30px;
+  color: black;
+}
+.form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.print {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+@media screen and (max-width: 512px) {
+  .container {
+    flex-direction: column;
+    padding: 5px 15px;
+    gap: 5px;
+  }
+  .textcontainer {
+    width: 100%;
+  }
+  .header {
+    font-size: 50px;
+    padding-bottom: 10px;
+    text-align: center;
+  }
+  .anchor {
+    align-items: center;
+  }
+  .button {
+    padding: 10px 20px;
+    width: 100%;
+    text-align: center;
+  }
+  .boxcontainer {
+    padding: 10px 10px;
+    width: 100%;
+  }
+
+  .form {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .form img {
+    height: 200px;
+  }
+  .print {
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+  .print img {
+    height: 200px;
+  }
+  .howcontainer {
+    padding: 5px 15px;
+  }
+  .head {
+    font-size: 40px;
+  }
+  .texthead {
+    font-size: 30px;
+    text-align: center;
+  }
+  .textparagraph {
+    font-size: 20px;
+    text-align: center;
+  }
+}
