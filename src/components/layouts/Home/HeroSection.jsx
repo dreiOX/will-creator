@@ -18,7 +18,7 @@ function HeroSection() {
       </div>
       <div className={styles.boxcontainer}>
         <div className={styles.box}></div>
-        <img src={image} alt='image' />
+        <img src={image} alt='doc' />
       </div>
     </div>
   );
