@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import style from "./willform.module.css";
 
 function WillFormView() {
   const [ip, setIp] = useState("");
@@ -10,11 +11,21 @@ function WillFormView() {
     propertyName: "",
     propertyPercentage: "100%",
     beneficiary: "",
-    willConditional: "",
+    willConditional:
+      "Should any beneficiary not survive me by _ days, their share shall be distributed to _.",
   });
-
   const [checked, setChecked] = useState(false);
 
+  const disabledSub =
+    checked &&
+    formState.representativeName &&
+    formState.willWritersAddress &&
+    formState.willWritersName &&
+    formState.willConditional;
+  const disabledAdd = !!formState.propertyName && !!formState.beneficiary;
+
+
+  /* fetching ip address to use as online signature */
   text("https://www.cloudflare.com/cdn-cgi/trace").then((data) => {
     let ipRegex = /[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/;
     let ip = data.match(ipRegex)[0];
@@ -35,22 +46,26 @@ function WillFormView() {
     }));
   };
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className={style.container}>
+      <h2>Last Will and Testament Form</h2>
+      <form onSubmit={handleSubmit} className={style.form}>
         <section>
           <h3>Personal Information</h3>
-          <label>
+          <label className={style.checkboxLabel}>
             Tick to indicate that you are of sound mind while filling this will:
             <input
               type="checkbox"
               checked={checked}
               onChange={(e) => setChecked(e.target.checked)}
               name="soundMind"
+              className={style.checkbox}
               id="checkbox"
               required
             />
+            <span></span>
           </label>
           <label>
+            Name *
             <input
               type="name"
               id="name"
@@ -63,6 +78,7 @@ function WillFormView() {
             />
           </label>
           <label>
+            Address *
             <input
               type="address"
               name="willWritersAddress"
@@ -77,6 +93,7 @@ function WillFormView() {
         <section>
           <h3>Name(s) of Representative(s)</h3>
           <label>
+            Personal Representive *
             <input
               type="name"
               name="representativeName"
@@ -87,6 +104,7 @@ function WillFormView() {
             />
           </label>
           <label>
+            Substitute
             <input
               type="name"
               name="repSubstitute"
@@ -98,53 +116,80 @@ function WillFormView() {
         </section>
         <section>
           <h3>Distribution of properties</h3>
-          <input
-            type="text"
-            name="propertyName"
-            value={formState?.propertyName}
-            onChange={handleChange}
-            placeholder="enter property name"
-          />
-          <select
-            name="propertyPercentage"
-            value={formState?.propertyPercentage}
-            onChange={handleChange}
+          <label>
+            Property Name *
+            <input
+              type="text"
+              name="propertyName"
+              required
+              value={formState?.propertyName}
+              onChange={handleChange}
+              placeholder="enter property name"
+            />
+          </label>
+          <label>
+            Percentage:{" "}
+            <select
+              name="propertyPercentage"
+              value={formState?.propertyPercentage}
+              onChange={handleChange}
+            >
+              <option value="100%">100%</option>
+              <option value="90%">90%</option>
+              <option value="80%">80%</option>
+              <option value="70%">70%</option>
+              <option value="60%">60%</option>
+              <option value="50%">50%</option>
+              <option value="40%">40%</option>
+              <option value="30%">30%</option>
+              <option value="20%">20%</option>
+              <option value="10%">10%</option>
+            </select>
+          </label>
+          <label>
+            Beneficiary *
+            <input
+              type="name"
+              name="beneficiary"
+              placeholder="enter name of recipient beneficiary"
+              value={formState?.beneficiary}
+              onChange={handleChange}
+              required
+            />
+          </label>
+          <button
+            className={style.add}
+            style={{
+              opacity: `${!disabledAdd ? "0.4" : "1"}`,
+            }}
+            disabled={!disabledAdd}
           >
-            <option value="100%">100%</option>
-            <option value="90%">90%</option>
-            <option value="80%">80%</option>
-            <option value="70%">70%</option>
-            <option value="60%">60%</option>
-            <option value="50%">50%</option>
-            <option value="40%">40%</option>
-            <option value="30%">30%</option>
-            <option value="20%">20%</option>
-            <option value="10%">10%</option>
-          </select>
-          <input
-            type="name"
-            name="beneficiary"
-            placeholder="enter name of recipient beneficiary"
-            value={formState?.beneficiary}
-            onChange={handleChange}
-          />
-          <button>Add+</button>
+            add beneficiary
+          </button>
         </section>
         <section>
-          <h3>
-            Condition for Inability of A Beneficiary to Not Receive Property
-          </h3>
-          <label htmlFor="">
+          <label>
+            Condition for Inability of A Beneficiary to Receive Property *
             <textarea
               name="willConditional"
               id=""
+              placeholder="fill in condition"
               value={formState?.willConditional}
               onChange={handleChange}
+              required
             ></textarea>
           </label>
         </section>
 
-        <button type="submit">submit</button>
+        <button
+          type="submit"
+          disabled={!disabledSub}
+          style={{
+            opacity: `${!disabledSub ? "0.4" : "1"}`,
+          }}
+        >
+          submit
+        </button>
       </form>
     </div>
   );
