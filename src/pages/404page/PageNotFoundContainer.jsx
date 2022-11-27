@@ -1,11 +1,11 @@
 import React from "react";
 import { PageWrapper } from "../../components/modules/wrapper";
-import HomeView from "../HomePage/HomeView";
+import PageNotFound from "./PageNotFound";
 
-export const HomeContainer = () => {
+export const PageNotFoundContainer = () => {
   return (
     <PageWrapper>
-      <HomeView />
+      <PageNotFound/>
     </PageWrapper>
   );
 };

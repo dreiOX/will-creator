@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 export default function WillDisplay() {
   const { willData } = useContext(AppContext);
-  console.log(willData)
+  
   const date = new Date()
   
 
