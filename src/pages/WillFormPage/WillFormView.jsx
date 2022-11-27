@@ -83,14 +83,15 @@ function WillFormView() {
       let c = formState.propertyPercentage;
       let cNum = Number(c.slice(0, c.length - 1));
       let exceeded = false;
+      let temp = 0
       h.map((v) => {
         let p = v.propertyPercentage;
         let pNum = Number(p.slice(0, p.length - 1));
-
-        if (cNum + pNum > 100) {
+        temp += pNum
+        if (cNum + temp > 100) {
           exRef.current.innerText =
             "you have exceeded the 100% mark. You only have " +
-            (100 - pNum) +
+            (100 - temp) +
             "% of this property left";
           exceeded = true;
           setTimeout(() => {
