@@ -1,0 +1,13 @@
+
+.container{
+  width: 100vw;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.code{
+  color: orange;
+  font-size: 27px;
+}
